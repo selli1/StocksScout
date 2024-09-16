@@ -17,12 +17,10 @@ struct StockDetailView: View {
     let stock: MyStock
 
     @EnvironmentObject var dataManager: APIDataManager
-    
-    @State private var aggregatesResponse: AggregateResponse?
-    
+        
     var body: some View {
         VStack {
-            if let aggregateResults = aggregatesResponse?.results, aggregateResults.count > 0 {
+            if let aggregateResults = stock.aggregatesResults?.sorted(by: { $0.timestamp < $1.timestamp }), aggregateResults.count > 0 {
                 GroupBox("\(stock.ticker) - 1D") {
                     ChartView(aggregates: aggregateResults)
                 }
@@ -57,7 +55,8 @@ struct StockDetailView: View {
         .toolbarBackground(.visible, for: .navigationBar)
         .navigationTitle("Stock detail")
         .task {
-            self.aggregatesResponse =  try? await dataManager.fetchStockAggregates(stock)
+            //self.aggregatesResponse =  try? await dataManager.fetchStockAggregates(stock)
+            dataManager.updateStockAggregates(stock)
             dataManager.updateStockDetails(stock)
         }
     }

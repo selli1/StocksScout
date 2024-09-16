@@ -68,6 +68,21 @@ final class APIDataManager: ObservableObject {
             }
         }
     }
+    
+    public func updateStockAggregates(_ stock: MyStock) {
+        Task {
+            do {
+                let aggregatesResponse = try await self.api.getAggregates(stock.tickerInfo.ticker)
+                DispatchQueue.main.async {
+                    stock.aggregatesResults = aggregatesResponse.results
+                }
+            } catch NetworkError.apiError(let urlString, let requestId) {
+                print("APIERROR: \(urlString) \(requestId)")
+            } catch {
+                print(error.localizedDescription)
+            }
+        }
+    }
         
     public func fetchStockAggregates(_ stock: MyStock) async throws -> AggregateResponse {
         do {

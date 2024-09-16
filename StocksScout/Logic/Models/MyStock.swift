@@ -14,7 +14,7 @@ final class MyStock {
     var tickerInfo: TickerResult
     var previousClose: AggregateResult?
     var tickerDetails: TickerDetailsResult?
-    //var aggregatesResponse: AggregateResponse?
+    @Relationship(deleteRule: .cascade) var aggregatesResults: [AggregateResult]?
 
     init(tickerInfo: TickerResult) {
         self.ticker = tickerInfo.ticker
