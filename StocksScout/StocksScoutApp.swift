@@ -36,7 +36,7 @@ struct StocksScoutApp: App {
         WindowGroup {
             ContentView().task {
                 apiDataManager.setContext(sharedModelContainer.mainContext)
-                //apiDataManager.updateTickers(tickersNextUrl)
+                apiDataManager.updateTickers(tickersNextUrl)
             }
             .environmentObject(apiDataManager)
         }
