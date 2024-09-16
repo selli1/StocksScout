@@ -76,6 +76,11 @@ struct StocksOverviewView: View {
                 refreshStockData()
             }
         }
+        .onChange(of: stocks.count) { initialValue, newValue in
+            if newValue > initialValue {
+                refreshStockData()
+            }
+        }
     }
     
     func refreshStockData() {
