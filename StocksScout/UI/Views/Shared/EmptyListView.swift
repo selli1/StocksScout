@@ -9,21 +9,31 @@ import Foundation
 import SwiftUI
 
 struct EmptyListView: View {
-    
-    init(_ message: String) {
+
+    init(_ title: String, message: String? = nil) {
+        self.title = title
         self.message = message
     }
     
-    let message: String
+    let title: String
+    let message: String?
     
     var body: some View {
-        VStack{
+        VStack(alignment: .center) {
             Spacer()
-            Text("Your stock list is empty")
+            Text(title)
+                .multilineTextAlignment(.center)
                 .bold()
                 .foregroundColor(.scoutGrey)
+            if let message {
+                Text(message)
+                    .multilineTextAlignment(.center)
+                    .foregroundColor(.scoutGrey)
+                    .padding(.top)
+            }
             Spacer()
             Spacer()
         }
+        .padding()
     }
 }

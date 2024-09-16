@@ -17,6 +17,7 @@ import SwiftData
 
 struct AddStockView: View {
     
+    @AppStorage("lastTickerUpdate") private var lastTickerUpdate: Double?
     @Environment(\.modelContext) private var modelContext
     @Environment(\.presentationMode) private var presentationMode
     @State private var searchText: String = ""
@@ -29,7 +30,8 @@ struct AddStockView: View {
                         addStock(tickerResult)
                     })
                 } else {
-                    EmptyListView("Search to add a stock")
+                    EmptyListView("Search to add a stock", 
+                                  message: lastTickerUpdate == nil ? "Stock tickers for search are currently populating.\n\n If results are missing please check back later." : nil)
                 }
             }
             .navigationBarTitleDisplayMode(.large)
